@@ -19,7 +19,7 @@ public class Game {
 	
         System.out.println(questionOne);
         System.out.println("O que voce deseja fazer?");
-        System.out.println("1 - Se defender do " + zumbi.name);
+        System.out.println("1 - Atacar o " + zumbi.name);
         System.out.println("2 - Fugir");
         System.out.printf("Escolha as opcoes 1 ou 2: ");
 		
@@ -29,11 +29,33 @@ public class Game {
                 int numberChoice = input.nextInt();
 
                 if(numberChoice == 1){
-                    System.out.println("Porradaria!");
-					break;
+                    Dices dados = new Dices();
+					System.out.println(human.name + "Jogando dados para atacar o " + zumbi.name);
+					human.diceroll = dados.rollDice(3,6);
+					zumbi.diceroll = dados.rollDice(3,6);
+					
+					if(human.diceroll > zumbi.diceroll){
+						System.out.println("Maior");
+					}
+
                 } else if(numberChoice == 2){
-                    System.out.println("Corre negada!!!!");
+                    Random generator = new Random();
+					int x = generator.nextInt();
+					String string = null;
+					switch (x%3){
+					case 0:
+						string = "A";
+						break;
+					case 1:
+						string = "B";
+						break;
+					case 2:
+						string = "C";
+						break;
+					}
+					System.out.println(string);
 					break;
+					
                 } else {
                     playGame();
 					break;
