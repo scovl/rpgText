@@ -2,19 +2,20 @@ import java.util.Random;
 
 public class Dices{
 	
-    public static int rollDice(int number, int nSides){ 
-        int num = 0;
+    public static int rollDice(int choice, int nSides){ 
+        int total = 0;
         int roll = 0;
+		
         Random random = new Random(); 
 		
-        if(nSides >=3){ 
-            for(int i = 0; i < number; i++){ 
-                roll = random.nextInt(nSides)+1;
+        if(nSides >= 3){ 
+            for(int i = 0; i < choice; i++){ 
+                roll = random.nextInt(nSides);
                 //System.out.println("Dado jogado:  " + roll);
-                num = num + roll; 
+                total = total + roll; 
             } 
         } 
-        return num;  
+        return total;  
     } 
 }
 
