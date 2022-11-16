@@ -1,10 +1,9 @@
-import java.io.IOException;
 import java.util.Scanner;
 import java.util.Random;
 
 public class Game {
 
-	private static void playGame() throws IOException {
+	private static void playGame(){
 
 		// cmd clear, cls
 		System.out.print("\033[H\033[2J");
@@ -14,6 +13,7 @@ public class Game {
 		Enemy zumbi = new Enemy();
 		human.name = "Vitor";
 		zumbi.name = "Zumbi";
+
 
 		String questionOne = (human.name + " estava andando de bike pela paulista e, de repente, se deparou com uma inacreditavel horda de Monstros. De repente, um " + zumbi.name + " veio em sua direcao.");
 
@@ -30,14 +30,30 @@ public class Game {
 
 				if(numberChoice == 1){
 					Dices dados = new Dices();
-					System.out.println(human.name + " jogando dados para atacar o " + dados.rollDice(3,6));
+
 					human.diceroll = dados.rollDice(3,6);
 					zumbi.diceroll = dados.rollDice(3,6);
 
+					System.out.println(human.name + " jogando dados para atacar " + zumbi.name);
+					System.out.println("A soma das vezes que " + human.name + " jogou, deu: " + human.diceroll);
+					System.out.println("A soma das vezes que " + zumbi.name + " jogou, deu: " + zumbi.diceroll);
+
 					if(human.diceroll > zumbi.diceroll){
-						System.out.println("Attack");
+						human.weapon = "capacete";
+						zumbi.weapon = "mordida";
+
+						if(human.weapon == "capacete" && zumbi.weapon == "mordida"){
+							human.damage = 15;
+							zumbi.damage = 5;
+						}
+
+						int attack = zumbi.health - human.damage;
+
+						System.out.println(human.name + " tira " + human.damage + " de dano do " + zumbi.name);
+						System.out.println(zumbi.name + " está com " + attack + " de vida");
+
 					} else if(human.diceroll < zumbi.diceroll) {
-						System.out.println("xablau");
+						System.out.println(zumbi.name + " ataca " + human.name);
 					}
 					break;
 
@@ -74,7 +90,7 @@ public class Game {
 		}
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		playGame();
 	}
 }
