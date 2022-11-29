@@ -1,32 +1,47 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class Game{
-    public void playGame(){
+public class Game {
+    public void playGame() {
+
         Player player = new Player();
         Enemy enemy = new Enemy();
 
-        String questionOne = (player.getName() + " estava andando de bike pela paulista e, de repente, notei que ao invés de pedestres, haviam monstros, muitos monstros por toda parte. Esquivei-me de todos que consegui mas, infelizmente, logo a frente, apareceu um que aparentou ser uma espécie de ZUMBI para me atacar. O que você deseja fazer?");
+
+
+        System.out.print("███████╗██╗  ██╗██╗  ██╗██╗   ██╗███╗   ██╗████████╗ \n" +
+                         "██╔════╝╚██╗██╔╝██║  ██║██║   ██║████╗  ██║╚══██╔══╝ \n" +
+                         "█████╗   ╚███╔╝ ███████║██║   ██║██╔██╗ ██║   ██║    \n" +
+                         "██╔══╝   ██╔██╗ ██╔══██║██║   ██║██║╚██╗██║   ██║    \n" +
+                         "███████╗██╔╝ ██╗██║  ██║╚██████╔╝██║ ╚████║   ██║    \n" +
+                         "╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    \n");
+
+        String questionOne = (player.getName() + " estava andando de bike pela paulista e,"   +
+          "de repente, notei que ao invés de pedestres, haviam monstros, muitos monstros por" +
+          "toda parte. Esquivei-me de todos que consegui mas, infelizmente, logo a frente, "  +
+          "apareceu um que aparentou ser uma espécie de ZUMBI para me atacar. O que você "    +
+          "deseja fazer?");
+
         System.out.println(questionOne);
         System.out.println("1 - Atacar");
         System.out.println("2 - Fugir");
         System.out.printf("Escolha entre a opção 1 e 2: ");
 
-        while(true){
-            try{
+        while (true) {
+            try {
                 Scanner input = new Scanner(System.in);
                 int numberChoice = input.nextInt();
 
-                if(numberChoice == 1){
+                if (numberChoice == 1) {
                     Fight fight = new Fight();
                     fight.fight(player, enemy);
 
-                } else if(numberChoice == 2){
+                } else if (numberChoice == 2) {
                     Random generator = new Random();
                     int x = generator.nextInt();
 
                     String string = null;
-                    switch (x%3){
+                    switch (x % 3) {
                         case 0:
                             string = "A";
                             break;
@@ -42,15 +57,25 @@ public class Game{
                 } else {
                     playGame();
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Caracatere inválido!!! Voltando ao Menu...");
                 playGame();
             }
         }
     }
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         Game game = new Game();
         game.playGame();
     }
 }
+
+// TODO
+//  Escolher o nome do jogo *
+//  Criar uma classe History e Menu
+//  Adicionar nome e objetos em ascii art *
+//  Implementar os dados para a opcao 2 (fugir)
+//  Implementar o GAME OVER com a opcao de voltar ao menu ou sair do jogo
+
+
+
