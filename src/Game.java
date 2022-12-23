@@ -8,31 +8,13 @@ public class Game {
         Enemy enemy = new Enemy();
 
 
-
-        System.out.print("███████╗██╗  ██╗██╗  ██╗██╗   ██╗███╗   ██╗████████╗ \n" +
-                         "██╔════╝╚██╗██╔╝██║  ██║██║   ██║████╗  ██║╚══██╔══╝ \n" +
-                         "█████╗   ╚███╔╝ ███████║██║   ██║██╔██╗ ██║   ██║    \n" +
-                         "██╔══╝   ██╔██╗ ██╔══██║██║   ██║██║╚██╗██║   ██║    \n" +
-                         "███████╗██╔╝ ██╗██║  ██║╚██████╔╝██║ ╚████║   ██║    \n" +
-                         "╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    \n");
-
-        String questionOne = (player.getName() + " estava andando de bike pela paulista e,"   +
-          "de repente, notei que ao invés de pedestres, haviam monstros, muitos monstros por" +
-          "toda parte. Esquivei-me de todos que consegui mas, infelizmente, logo a frente, "  +
-          "apareceu um que aparentou ser uma espécie de ZUMBI para me atacar. O que você "    +
-          "deseja fazer?");
-
-        System.out.println(questionOne);
-        System.out.println("1 - Atacar");
-        System.out.println("2 - Fugir");
-        System.out.printf("Escolha entre a opção 1 e 2: ");
-
         while (true) {
             try {
                 Scanner input = new Scanner(System.in);
                 int numberChoice = input.nextInt();
 
                 if (numberChoice == 1) {
+
                     Fight fight = new Fight();
                     fight.fight(player, enemy);
 
@@ -63,18 +45,17 @@ public class Game {
             }
         }
     }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.playGame();
-    }
 }
 
 // TODO
+//  Criar uma classe History e Menu <--
+//  Adicionar menu inicial do jogo (criar personagem, iniciar jogo, carregar jogo salvo)
+//  Classe de armas, moedas
 //  Escolher o nome do jogo *
-//  Criar uma classe History e Menu
 //  Adicionar nome e objetos em ascii art *
 //  Implementar os dados para a opcao 2 (fugir)
+//  Adicionar uma mecanica de XP
+//  Adicionar uma mecanica de mana/life recover
 //  Implementar o GAME OVER com a opcao de voltar ao menu ou sair do jogo
 
 

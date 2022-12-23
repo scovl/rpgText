@@ -1,6 +1,7 @@
 public class Fight {
 
     public String fight(Player player, Enemy enemy){
+
         while(player.getHealth() > 0 && enemy.getHealth() > 0){
             playerTurn(player, enemy);
             enemyTurn(player, enemy);

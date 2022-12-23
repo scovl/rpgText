@@ -5,6 +5,9 @@ class Enemy {
 	private int attackDiceSides;
 	private int defenseDice;
 	private int defenseDiceSides;
+
+	private int level;
+
 	// construtor
 	public Enemy(){
 		this.name = "Bolsonaro";
@@ -13,6 +16,7 @@ class Enemy {
 		this.attackDiceSides = 20;
 		this.defenseDice = 3;
 		this.defenseDiceSides = 6;
+		this.level = 1;
 	}
 
 	public String getName() {
