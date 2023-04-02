@@ -20,7 +20,7 @@ public class Game {
 
                 if (numberChoice == 1) {
                     Fight fight = new Fight();
-                    System.out.println(fight.fight(player, enemy));
+                    fight.fight(player, enemy);
                 } else if (numberChoice == 2) {
                     int x = generator.nextInt();
 
