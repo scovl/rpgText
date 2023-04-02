@@ -8,6 +8,7 @@ class Player {
 // construtor
 public Player(){
     this.name = "Severino";
+    this.health = 100;
     this.attackDice = 3;
     this.attackDiceSides = 20;
     this.defenseDice = 3;
@@ -40,7 +41,7 @@ public Player(){
     }
 
     public int getHealth() {
-    return health;
+        return health;
     }
 
     public int getAttackDice() {
