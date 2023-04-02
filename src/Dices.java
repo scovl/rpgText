@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Dices{
-    public static int rollDice(int choice, int nSides){
+    public int rollDice(int choice, int nSides){
         int total = 0;
         int roll = 0;
 
