@@ -1,22 +1,24 @@
 public class Fight {
 
-    public String fight(Player player, Enemy enemy){
+    Dices dices = new Dices();
+
+    public void fight(Player player, Enemy enemy){
 
         while(player.getHealth() > 0 && enemy.getHealth() > 0){
             playerTurn(player, enemy);
             enemyTurn(player, enemy);
         }
-        return null;
     }
 
 
     private void enemyTurn(Player player, Enemy enemy){
-        int enemyAttack = Dices.rollDice(enemy.getAttackDice(), enemy.getAttackDiceSides());
+
+        int enemyAttack = dices.rollDice(enemy.getAttackDice(), enemy.getAttackDiceSides());
         if(enemyAttack == 0){
             System.out.println("O " + enemy.getName() + " errou o ataque");
         }
 
-        int playerDefense = Dices.rollDice(player.getDefenseDice(), player.getDefenseDiceSides());
+        int playerDefense = dices.rollDice(player.getDefenseDice(), player.getDefenseDiceSides());
 
         // Damage
         int damage = enemyAttack - playerDefense;
@@ -32,12 +34,12 @@ public class Fight {
     }
 
     private void playerTurn(Player player, Enemy enemy){
-        int playerAttack = Dices.rollDice(player.getAttackDice(), player.getAttackDiceSides());
+        int playerAttack = dices.rollDice(player.getAttackDice(), player.getAttackDiceSides());
         if(playerAttack == 0){
             System.out.println("O " + player.getName() + " errou o ataque");
         }
 
-        int enemyDefense = Dices.rollDice(enemy.getDefenseDice(), enemy.getDefenseDiceSides());
+        int enemyDefense = dices.rollDice(enemy.getDefenseDice(), enemy.getDefenseDiceSides());
 
         // Damage
         int damage = playerAttack - enemyDefense;
