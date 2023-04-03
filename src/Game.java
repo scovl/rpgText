@@ -48,3 +48,12 @@ public class Game {
         }
     }
 }
+
+// TODO
+//  Adicionar menu inicial do jogo (criar personagem, iniciar jogo, carregar jogo salvo)
+//  Classe de armas, moedas
+//  Adicionar nome e objetos em ascii art *
+//  Implementar os dados para a opcao 2 (fugir)
+//  Adicionar uma mecanica de XP
+//  Adicionar uma mecanica de mana/life recover
+//  Implementar o GAME OVER com a opcao de voltar ao menu ou sair do jogo
