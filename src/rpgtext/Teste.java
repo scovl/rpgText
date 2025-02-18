@@ -1,3 +1,5 @@
+package rpgtext;
+
 public class Teste {
     public static void main(String[] args) {
         int coin = 0;

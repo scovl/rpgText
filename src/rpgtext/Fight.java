@@ -1,6 +1,26 @@
-public class Fight {
+package rpgtext;
 
-    Dices dices = new Dices();
+public class Fight {
+    private Player player;
+    private Enemy enemy;
+    private Dices dice;
+
+    public Fight(Player player, Enemy enemy) {
+        this.player = player;
+        this.enemy = enemy;
+        this.dice = new Dices();
+    }
+
+    public void startFight() {
+        int playerDamage = dice.rollDice(player.getAttackDice(), player.getAttackDiceSides());
+        int enemyDamage = dice.rollDice(enemy.getAttackDice(), enemy.getAttackDiceSides());
+
+        enemy.takeDamage(playerDamage);
+        System.out.println("Você causou " + playerDamage + " de dano!");
+        
+        player.takeDamage(enemyDamage);
+        System.out.println(enemy.getName() + " causou " + enemyDamage + " de dano!");
+    }
 
     public void fight(Player player, Enemy enemy){
 
@@ -13,12 +33,12 @@ public class Fight {
 
     private void enemyTurn(Player player, Enemy enemy){
 
-        int enemyAttack = dices.rollDice(enemy.getAttackDice(), enemy.getAttackDiceSides());
+        int enemyAttack = dice.rollDice(enemy.getAttackDice(), enemy.getAttackDiceSides());
         if(enemyAttack == 0){
             System.out.println("O " + enemy.getName() + " errou o ataque");
         }
 
-        int playerDefense = dices.rollDice(player.getDefenseDice(), player.getDefenseDiceSides());
+        int playerDefense = dice.rollDice(player.getDefenseDice(), player.getDefenseDiceSides());
 
         // Damage
         int damage = enemyAttack - playerDefense;
@@ -34,12 +54,12 @@ public class Fight {
     }
 
     private void playerTurn(Player player, Enemy enemy){
-        int playerAttack = dices.rollDice(player.getAttackDice(), player.getAttackDiceSides());
+        int playerAttack = dice.rollDice(player.getAttackDice(), player.getAttackDiceSides());
         if(playerAttack == 0){
             System.out.println("O " + player.getName() + " errou o ataque");
         }
 
-        int enemyDefense = dices.rollDice(enemy.getDefenseDice(), enemy.getDefenseDiceSides());
+        int enemyDefense = dice.rollDice(enemy.getDefenseDice(), enemy.getDefenseDiceSides());
 
         // Damage
         int damage = playerAttack - enemyDefense;

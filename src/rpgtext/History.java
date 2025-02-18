@@ -1,7 +1,9 @@
+package rpgtext;
+
 public class History {
 
     public void HistoryOne() {
-        Player player = new Player();
+        Player player = new Player("Severino");
         String questionOne = (player.getName() + " estava andando de bike pela paulista e, de repente, notei que ao invés de pedestres, haviam monstros, muitos monstros por toda parte. Esquivei-me de todos que consegui mas, infelizmente, logo a frente, apareceu um que aparentou ser uma espécie de ZUMBI para me atacar. O que você deseja fazer?");
         System.out.println(questionOne);
     }

@@ -1,3 +1,5 @@
+package rpgtext;
+
 public class Exhunt {
     public Exhunt() {
         System.out.print("███████╗██╗  ██╗██╗  ██╗██╗   ██╗███╗   ██╗████████╗ \n" +

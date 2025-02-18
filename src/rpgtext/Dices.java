@@ -1,3 +1,5 @@
+package rpgtext;
+
 import java.util.Random;
 
 public class Dices{
