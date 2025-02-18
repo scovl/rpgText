@@ -19,8 +19,14 @@ public class Game {
         showMainMenu();
     }
 
+    private void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     private void showMainMenu() {
         while (true) {
+            clearScreen();
             System.out.println("\n=== RPG TEXT GAME ===");
             System.out.println("1. Novo Jogo");
             System.out.println("2. Carregar Jogo (Em desenvolvimento)");
@@ -48,7 +54,7 @@ public class Game {
 
     private void createNewGame() {
         System.out.println("\nCrie seu personagem");
-        System.out.print("Digite o nome do seu herói: ");
+        System.out.print("Digite o nome do seu heroi: ");
         String name = scanner.nextLine();
         
         player = new Player(name);
@@ -59,35 +65,57 @@ public class Game {
     }
 
     private void startGameLoop() {
-        while (true) {
+        boolean playing = true;
+        while (playing) {
+            clearScreen();
             ascii.showBattle();
-            System.out.println("\nVocê encontrou um " + enemy.getName() + "!");
-            System.out.println("Vida do " + enemy.getName() + ": " + enemy.getHealth());
-            System.out.println("Sua vida: " + player.getHealth());
-            System.out.println("Seu XP: " + player.getXp());
-            System.out.println("\n1. Lutar");
-            System.out.println("2. Fugir");
-            System.out.println("3. Usar poção (Vida atual: " + player.getHealth() + ")");
+            System.out.println("\nVoce encontrou um " + enemy.getName() + "!");
             
-            int choice = scanner.nextInt();
-            
-            switch (choice) {
-                case 1:
-                    fight.startFight();
-                    break;
-                case 2:
-                    tryToEscape();
-                    break;
-                case 3:
-                    player.usePotion();
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
+            while (enemy.getHealth() > 0 && player.getHealth() > 0) {
+                showBattleStatus();
+                processBattleChoice();
+                clearScreen();
             }
             
             if (player.getHealth() <= 0) {
                 gameOver();
+                playing = false;  // Encerra o loop após game over
+            } else {
+                player.gainXp(50);
+                enemy = new Enemy();
+                fight = new Fight(player, enemy);
             }
+        }
+    }
+
+    private void showBattleStatus() {
+        System.out.println("\n" + enemy.getName() + ":");
+        ascii.barLife(enemy.getHealth());
+        
+        System.out.println("\n" + player.getName() + ":");
+        ascii.barLife(player.getHealth());
+        
+        System.out.println("XP: " + player.getXp());
+        System.out.println("\n1. Lutar");
+        System.out.println("2. Fugir");
+        System.out.println("3. Usar pocao (Vida atual: " + player.getHealth() + ")");
+    }
+
+    private void processBattleChoice() {
+        int choice = scanner.nextInt();
+        
+        switch (choice) {
+            case 1:
+                fight.startFight();
+                break;
+            case 2:
+                tryToEscape();
+                break;
+            case 3:
+                player.usePotion();
+                break;
+            default:
+                System.out.println("Opção inválida!");
         }
     }
 
@@ -96,18 +124,19 @@ public class Game {
         int escapeRoll = dice.rollDice(1, 6);
         
         if (escapeRoll > 4) {
-            System.out.println("Você conseguiu fugir!");
-            enemy = new Enemy(); // Novo inimigo
+            System.out.println("Voce conseguiu fugir!");
+            enemy = new Enemy();
             fight = new Fight(player, enemy);
         } else {
-            System.out.println("Você não conseguiu fugir!");
+            System.out.println("Voce nao conseguiu fugir!");
             int damage = enemy.getAttackDice();
             player.takeDamage(damage);
-            System.out.println("Você tomou " + damage + " de dano!");
+            System.out.println("Voce tomou " + damage + " de dano!");
         }
     }
 
     private void gameOver() {
+        clearScreen();
         ascii.showGameOver();
         System.out.println("\n=== GAME OVER ===");
         System.out.println("1. Voltar ao Menu Principal");
