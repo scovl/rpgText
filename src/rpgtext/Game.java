@@ -2,8 +2,13 @@ package rpgtext;
 
 import java.util.Scanner;
 import java.util.Random;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.SimpleFormatter;
 
 public class Game {
+    private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
     private Player player;
     private Enemy enemy;
     private Fight fight;
@@ -13,6 +18,23 @@ public class Game {
     public Game() {
         scanner = new Scanner(System.in);
         ascii = new Asciiart();
+        configureLogger();
+    }
+
+    private void configureLogger() {
+        LOGGER.setUseParentHandlers(false);
+        ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(new SimpleFormatter() {
+            @Override
+            public synchronized String format(java.util.logging.LogRecord record) {
+                return record.getMessage() + "\n";
+            }
+        });
+        LOGGER.addHandler(handler);
+    }
+
+    private void log(String message) {
+        LOGGER.info(message);
     }
 
     public void playGame() {
@@ -20,17 +42,17 @@ public class Game {
     }
 
     private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        log("\033[H\033[2J");
     }
 
     private void showMainMenu() {
-        while (true) {
+        boolean running = true;
+        while (running) {
             clearScreen();
-            System.out.println("\n=== RPG TEXT GAME ===");
-            System.out.println("1. Novo Jogo");
-            System.out.println("2. Carregar Jogo (Em desenvolvimento)");
-            System.out.println("3. Sair");
+            log("\n=== RPG TEXT GAME ===");
+            log("1. Novo Jogo");
+            log("2. Carregar Jogo (Em desenvolvimento)");
+            log("3. Sair");
             
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
@@ -40,21 +62,21 @@ public class Game {
                     createNewGame();
                     break;
                 case 2:
-                    System.out.println("Função ainda não implementada!");
+                    log("Função ainda não implementada!");
                     break;
                 case 3:
-                    System.out.println("Obrigado por jogar!");
-                    System.exit(0);
+                    log("Obrigado por jogar!");
+                    running = false;
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                    log("Opção inválida!");
             }
         }
     }
 
     private void createNewGame() {
-        System.out.println("\nCrie seu personagem");
-        System.out.print("Digite o nome do seu heroi: ");
+        log("\nCrie seu personagem");
+        log("Digite o nome do seu heroi: ");
         String name = scanner.nextLine();
         
         player = new Player(name);
@@ -69,7 +91,7 @@ public class Game {
         while (playing) {
             clearScreen();
             ascii.showBattle();
-            System.out.println("\nVoce encontrou um " + enemy.getName() + "!");
+            log("\nVoce encontrou um " + enemy.getName() + "!");
             
             while (enemy.getHealth() > 0 && player.getHealth() > 0) {
                 showBattleStatus();
@@ -79,9 +101,10 @@ public class Game {
             
             if (player.getHealth() <= 0) {
                 gameOver();
-                playing = false;  // Encerra o loop após game over
+                playing = false;
             } else {
                 player.gainXp(50);
+                player.addReward(enemy);
                 enemy = new Enemy();
                 fight = new Fight(player, enemy);
             }
@@ -89,16 +112,17 @@ public class Game {
     }
 
     private void showBattleStatus() {
-        System.out.println("\n" + enemy.getName() + ":");
+        log("\n" + enemy.getName() + ":");
         ascii.barLife(enemy.getHealth());
         
-        System.out.println("\n" + player.getName() + ":");
+        log("\n" + player.getName() + ":");
         ascii.barLife(player.getHealth());
         
-        System.out.println("XP: " + player.getXp());
-        System.out.println("\n1. Lutar");
-        System.out.println("2. Fugir");
-        System.out.println("3. Usar pocao (Vida atual: " + player.getHealth() + ")");
+        log("XP: " + player.getXp());
+        log("Moedas: " + player.getCoins());
+        log("\n1. Lutar");
+        log("2. Fugir");
+        log("3. Usar pocao (Vida atual: " + player.getHealth() + ")");
     }
 
     private void processBattleChoice() {
@@ -115,7 +139,7 @@ public class Game {
                 player.usePotion();
                 break;
             default:
-                System.out.println("Opção inválida!");
+                log("Opção inválida!");
         }
     }
 
@@ -124,29 +148,29 @@ public class Game {
         int escapeRoll = dice.rollDice(1, 6);
         
         if (escapeRoll > 4) {
-            System.out.println("Voce conseguiu fugir!");
+            log("Voce conseguiu fugir!");
             enemy = new Enemy();
             fight = new Fight(player, enemy);
         } else {
-            System.out.println("Voce nao conseguiu fugir!");
+            log("Voce nao conseguiu fugir!");
             int damage = enemy.getAttackDice();
             player.takeDamage(damage);
-            System.out.println("Voce tomou " + damage + " de dano!");
+            log("Voce tomou " + damage + " de dano!");
         }
     }
 
     private void gameOver() {
         clearScreen();
         ascii.showGameOver();
-        System.out.println("\n=== GAME OVER ===");
-        System.out.println("1. Voltar ao Menu Principal");
-        System.out.println("2. Sair do Jogo");
+        log("\n=== GAME OVER ===");
+        log("1. Voltar ao Menu Principal");
+        log("2. Sair do Jogo");
         
         int choice = scanner.nextInt();
         if (choice == 1) {
             showMainMenu();
         } else {
-            System.out.println("Obrigado por jogar!");
+            log("Obrigado por jogar!");
             System.exit(0);
         }
     }
