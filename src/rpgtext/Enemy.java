@@ -9,7 +9,6 @@ class Enemy {
 	private int attackDiceSides;
 	private int defenseDice;
 	private int defenseDiceSides;
-
 	private int level;
 
 	private static final String[] ENEMY_NAMES = {
@@ -18,16 +17,23 @@ class Enemy {
 		"Demonio da Corrupcao", "Capanga das Sombras", "Miliciano"
 	};
 
-	// construtor
-	public Enemy(){
+	public Enemy() {
 		Random rand = new Random();
-		this.level = 1;
+		this.level = rand.nextInt(3) + 1;  // Level 1 a 3
 		this.name = ENEMY_NAMES[rand.nextInt(ENEMY_NAMES.length)];
-		this.health = 50 + (25 * level);
-		this.attackDice = 2 + level;
-		this.attackDiceSides = 15 + (5 * level);
-		this.defenseDice = 2 + level;
-		this.defenseDiceSides = 6;
+		
+		// Atributos base aleatórios
+		int baseHealth = rand.nextInt(31) + 40;  // 40-70 de vida base
+		int baseAttackDice = rand.nextInt(2) + 2;  // 2-3 dados base
+		int baseAttackSides = rand.nextInt(6) + 15;  // d15-d20 base
+		int baseDefenseDice = rand.nextInt(2) + 1;  // 1-2 dados base
+		
+		// Escala com level
+		this.health = baseHealth + (20 * level);
+		this.attackDice = baseAttackDice + level;
+		this.attackDiceSides = baseAttackSides + (2 * level);
+		this.defenseDice = baseDefenseDice + level;
+		this.defenseDiceSides = 6;  // Mantém d6 para defesa
 	}
 
 	public String getName() {
@@ -45,7 +51,6 @@ class Enemy {
 	public int getAttackDiceSides() {
 		return attackDiceSides;
 	}
-
 
 	public int getDefenseDice() {
 		return defenseDice;
