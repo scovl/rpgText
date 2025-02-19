@@ -12,6 +12,7 @@ class Player {
     private int attackDiceSides;
     private int defenseDice;
     private int defenseDiceSides;
+    private Coins coins;
 
     public Player(String name) {
         this.name = name;
@@ -25,6 +26,7 @@ class Player {
         this.attackDiceSides = 20;
         this.defenseDice = 3;
         this.defenseDiceSides = 6;
+        this.coins = new Coins();
     }
 
     public String getName() {
@@ -94,6 +96,14 @@ class Player {
 
     public int getXp() {
         return xp;
+    }
+
+    public void addReward(Enemy enemy) {
+        coins.addCoins(enemy.getLevel());
+    }
+
+    public int getCoins() {
+        return coins.getAmount();
     }
 }
 
